@@ -34,8 +34,19 @@ function displayTemperature(response){
     iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
-let apiKey = "1a2b7258ebd456c01aef9175dfe8b709";
-let city = "Singapore";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+function search(city){
+    let apiKey = "1a2b7258ebd456c01aef9175dfe8b709";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayTemperature);
+}
 
-axios.get(apiUrl).then(displayTemperature);
+function handleSubmit(event){
+    event.preventDefault();
+    let cityInputElement = document.querySelector("#city-input");
+    search(cityInputElement.value);
+}
+
+search("New York");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
